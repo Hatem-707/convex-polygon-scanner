@@ -19,93 +19,61 @@ long long factorial(int x)
     return product;
 }
 
-float crossProduct(pair<int, int> a, pair<int, int> b, pair<int, int> c) {
-    // Computes (b - a) x (c - a)
-    return (b.first - a.first) * (c.second - a.second) - 
-           (b.second - a.second) * (c.first - a.first);
+float crossProduct(pair<int, int> a, pair<int, int> b, pair<int, int> c){
+    // formula: (b-a)x(c-a), (ux*vy - uy*vx)
+    pair<int, int> vec1 = {b.first - a.first, b.second - a.second};
+    pair<int, int> vec2 = {c.first - a.first, c.second - a.second};
+    return (vec1.first*vec2.second)-(vec1.second*vec2.first);
 }
 
-class Stack
-{
-private:
-    vector<pair<int,int>> data;
-public:
-    Stack(int size);
-    ~Stack();
-    int top = 0;
-    void push(pair<int, int> entry) {
-        data[top] = entry;
-        top++;
-    }
-    pair<int,int> pop(){
-        if (top != 0) {
-            top--;
-            return data[top];
+
+vector<pair<int, int>> grahamScan(vector<pair<int, int>> points){
+    pair<int,int> minPoint = {INT32_MIN, INT32_MAX};
+    for (pair<int, int> point: points){
+        if (point.second < minPoint.second || (point.second == minPoint.second && point.first > minPoint.first)){
+            minPoint = point;
         }
-
     }
-    pair<int,int> peek(int index){
-        if (top != 0)
-            return data[top-index];
-    }
-};
 
-Stack::Stack(int size)
-{
- data = vector<pair<int, int>>(size, (pair<int,int>) {0,0});   
-}
-
-Stack::~Stack() = default;
-
-
-vector<pair<int, int>> grahamScan(vector<pair<int, int>> points) {
-    // Find the pivot (lowest y; if tie, lowest x)
-    auto pivot = *min_element(points.begin(), points.end(), [](auto a, auto b) {
-        return (a.second < b.second) || (a.second == b.second && a.first < b.first);
-    });
-    
-    // Remove pivot from points
     vector<pair<int, int>> others;
-    for (const auto &p : points) {
-        if (p != pivot)
-            others.push_back(p);
-    }
-    
-    // Sort by polar angle using atan2
-    sort(others.begin(), others.end(), [pivot](auto a, auto b) {
-        double angleA = atan2(a.second - pivot.second, a.first - pivot.first);
-        double angleB = atan2(b.second - pivot.second, b.first - pivot.first);
-        if (angleA == angleB) {
-            double distA = (a.first - pivot.first) * (a.first - pivot.first) + (a.second - pivot.second) * (a.second - pivot.second);
-            double distB = (b.first - pivot.first) * (b.first - pivot.first) + (b.second - pivot.second) * (b.second - pivot.second);
-            return distA < distB;
-        }
-        return angleA < angleB;
-    });
-    
-    // Build the hull
-    vector<pair<int, int>> hull;
-    hull.push_back(pivot);
-    for (const auto &p : others) {
-        // Remove points that would make a non-left turn
-        while (hull.size() >= 2 &&
-               crossProduct(hull[hull.size()-2], hull[hull.size()-1], p) <= 0) {
-            hull.pop_back();
-        }
-        hull.push_back(p);
-    }
-    
-    return hull;
-}
 
+    for (pair<int, int> point: points){
+        if (point != minPoint) others.push_back(point);
+    }
+
+    sort(others.begin(), others.end(), [minPoint](pair<int,int> a, pair<int,int>b){
+        int orientation = (b.second-minPoint.second)*(minPoint.first-a.first) - (a.second - minPoint.second)*(minPoint.first - b.first);
+        if (orientation == 0){
+            return (a.first-minPoint.first)*(a.first-minPoint.first) + (a.second - minPoint.second)*(a.second - minPoint.second) < 
+                    (b.first-minPoint.first)*(b.first-minPoint.first) + (b.second - minPoint.second)*(b.second - minPoint.second);         
+        }
+        return orientation<0;
+    });
+    vector<pair<int, int>> hull;
+    hull.push_back(minPoint);
+    hull.push_back(others[0]);
+    for (int i=1; i<others.size(); i++){
+        if(crossProduct(hull[hull.size()-2], hull[hull.size()-1], others[i])>=0){
+            hull.push_back(others[i]);
+        }else{
+            while(crossProduct(hull[hull.size()-2], hull[hull.size()-1], others[i])<0){
+                hull.pop_back();
+            }
+            hull.push_back(others[i]);
+        }
+    }
+
+    return hull;
+
+}
 
 
 int main()
 {
     const int width = 1000;
     const int height = 1000;
-    const int numberOfPoints = 5;
-    const int sides = 4;
+    const int numberOfPoints = 13;
+    const int sides = 6;
     int locatedPoints = 0;
     set<pair<int, int>> points;
     vector<pair<int, int>> pointsVector;
@@ -117,17 +85,13 @@ int main()
         int y = rand() % height;
         bool collinear = false;
 
-        // Check collinearity with all pairs of existing points
         for (auto it1 = points.begin(); it1 != points.end() && !collinear; ++it1)
         {
             for (auto it2 = next(it1); it2 != points.end(); ++it2)
             {
-                // Calculate area of triangle (integer arithmetic)
-                int area = x * (it1->second - it2->second) +
-                           it1->first * (it2->second - y) +
-                           it2->first * (y - it1->second);
+                int product = crossProduct(*it1, *it2, (pair<int,int>){x,y});
 
-                if (area == 0)
+                if (product == 0)
                 {
                     collinear = true;
                     break;
