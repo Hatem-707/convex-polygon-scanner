@@ -5,7 +5,6 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-#include "raylib.h"
 #include "thread"
 #include "mutex"
 #include "reusableFunctions.hpp"

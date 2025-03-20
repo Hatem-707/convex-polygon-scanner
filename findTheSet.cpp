@@ -138,7 +138,7 @@ int main()
 {
     const int width = 20;
     const int height = 20;
-    const int numberOfPoints = 12;
+    const int numberOfPoints = 13;
     const int sides = 6;
     bool found = false;
     int trials = 0;

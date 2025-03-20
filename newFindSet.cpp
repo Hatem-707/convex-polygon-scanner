@@ -8,7 +8,6 @@
 #include <thread>
 #include <mutex>
 #include "format"
-#include "raylib.h"
 #include "reusableFunctions.hpp"
 
 using namespace std;
