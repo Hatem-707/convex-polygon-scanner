@@ -7,6 +7,7 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                // "reusableFunctions.cpp",
                 "${file}",
                 "-std=c++23",
                 "-o",

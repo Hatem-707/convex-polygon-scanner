@@ -136,12 +136,13 @@ void findSet(int width, int height, int numberOfPoints, int sides, bool &found, 
 
 int main()
 {
-    const int width = 1000;
-    const int height = 1000;
-    const int numberOfPoints = 13;
+    const int width = 20;
+    const int height = 20;
+    const int numberOfPoints = 12;
     const int sides = 6;
     bool found = false;
     int trials = 0;
+    srand(time(0));
 
     set<pair<int, int>> points;
     vector<pair<int, int>> pointsVector;
