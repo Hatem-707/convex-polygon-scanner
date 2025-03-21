@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void findSet(int width, int height, int numberOfPoints, int sides, bool &found, int &trials, set<pair<int, int>> &points, vector<pair<int, int>> &pointsVector, vector<vector<pair<int, int>>> &convexPolygons, mutex &mtx)
+void findSet(int width, int height, int numberOfPoints, int sides, bool &found, long long &trials, set<pair<int, int>> &points, vector<pair<int, int>> &pointsVector, vector<vector<pair<int, int>>> &convexPolygons, mutex &mtx)
 {
     while (!found)
     {
@@ -27,8 +27,6 @@ void findSet(int width, int height, int numberOfPoints, int sides, bool &found, 
         set<pair<int, int>> localPoints;
         vector<pair<int, int>> localPointsVector;
         vector<vector<pair<int, int>>> localConvexPolygons;
-
-        srand(time(0) + trials);
         while (locatedPoints < numberOfPoints)
         {
             int x = rand() % width;
@@ -113,13 +111,13 @@ int main()
     const int numberOfPoints = 12;
     const int sides = 6;
     fstream outputFile;
-    outputFile.open("benchmark1.txt", ios::app);
+    outputFile.open("benchmark1-2.txt", ios::app);
     
     for (int iteration = 0; iteration < 100; iteration++)
     {
         bool found = false;
-        int trials = 0;
-        srand(time(0));
+        long long trials = 0;
+        srand(25469+iteration);
         
 
         set<pair<int, int>> points;
@@ -139,7 +137,7 @@ int main()
             t.join();
         }
         double finalClocks = clock();
-        cout << "Number of trials: " << trials << endl;
+        cout << "Number of trials: " << trials << " iteration: "<< iteration <<endl;
         outputFile<<trials<<" "<< (double)(finalClocks-initialClocks) /CLOCKS_PER_SEC<<"\n";
     }
 

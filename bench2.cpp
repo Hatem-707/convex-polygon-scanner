@@ -20,11 +20,11 @@ int main(int argc, const char *argv[])
     int x = 20;
     int y = 20;
     fstream outputFile;
-    outputFile.open("benchmark2.txt", ios::app);
+    outputFile.open("benchmark2-1.txt", ios::app);
 
     for (int u = 0; u < 100; u++)
     {
-        srand(time(0));
+        srand(25469+u);
         long long iterations = 0;
         vector<pair<int, int>> emptySet;
         bool found = false;

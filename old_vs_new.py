@@ -8,13 +8,13 @@ def compute_slope(iterations, time_seconds):
     return average_slope, slopes
 
 # Load first dataset
-file_path_1 = "benchmark1.txt"  # Adjust path as needed
+file_path_1 = "benchmark1-2.txt"  # Adjust path as needed
 data1 = np.loadtxt(file_path_1)
 iterations1 = data1[:, 0]
 time_seconds1 = data1[:, 1]
 
 # Load second dataset
-file_path_2 = "benchmark2.txt"  # Adjust path as needed
+file_path_2 = "benchmark2-1.txt"  # Adjust path as needed
 data2 = np.loadtxt(file_path_2)
 iterations2 = data2[:, 0]
 time_seconds2 = data2[:, 1]
@@ -26,7 +26,7 @@ slope2, slopes_array2 = compute_slope(iterations2, time_seconds2)
 # Generate points for the slope lines
 time_range = np.linspace(min(time_seconds1), max(time_seconds1), 100)
 line1 = slope1 * time_range
-time_range2 = np.linspace(min(time_seconds2), max(time_seconds2), 100)
+time_range2 = np.linspace(min(time_seconds2),  max(time_seconds2), 100)
 line2 = slope2 * time_range2
 
 # Plot both datasets in the same figure
