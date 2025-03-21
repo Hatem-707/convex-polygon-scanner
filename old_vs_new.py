@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-slopes_array2
+
 # Function to compute slope
 def compute_slope(iterations, time_seconds):
     slopes = iterations / time_seconds  # Element-wise division

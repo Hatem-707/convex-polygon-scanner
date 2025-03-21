@@ -25,9 +25,13 @@ int main(int argc, const char *argv[]) {
     mutex mtx;
     vector<thread> threads;
 
-    for (int i = 0; i < 12; i++) {
-        threads.emplace_back(threadFunctionEmptySet, &mtx, n, h, x, y, &emptySet, &found, &iterations);
-    }
+    for (int i = 0; i < 14; i++)
+            {
+                threads.emplace_back(
+                    static_cast<void (*)(mutex *, int, int, int, int, vector<pair<int, int>> *, bool *, long long *)>(
+                        threadFunctionEmptySet),
+                    &mtx, n, h, x, y, &emptySet, &found, &iterations);
+            }
 
     for (auto &t : threads) {
         t.join();

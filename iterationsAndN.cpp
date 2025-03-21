@@ -36,7 +36,10 @@ int main(int argc, const char *argv[])
             double initialClock = clock();
             for (int i = 0; i < 14; i++)
             {
-                threads.emplace_back(threadFunctionEmptySet, &mtx, n, h, x, y, &emptySet, &found, &iterations);
+                threads.emplace_back(
+                    static_cast<void (*)(mutex *, int, int, int, int, vector<pair<int, int>> *, bool *, long long *)>(
+                        threadFunctionEmptySet),
+                    &mtx, n, h, x, y, &emptySet, &found, &iterations);
             }
 
             for (auto &t : threads)
@@ -56,7 +59,7 @@ int main(int argc, const char *argv[])
             std::cout << output;
             outputFile << iterations << " ";
         }
-        outputFile<<"\n";
+        outputFile << "\n";
     }
 
     return 0;

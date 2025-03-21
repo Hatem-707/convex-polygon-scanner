@@ -13,6 +13,11 @@ using namespace std;
 
 long long factorial(int x);
 float crossProduct(pair<int, int> a, pair<int, int> b, pair<int, int> c);
+float crossProduct(pair<long long, long long> a, pair<long long, long long> b, pair<long long, long long> c);
+vector<pair<long long, long long>> grahamScan(vector<pair<long long, long long>> points);
+vector<pair<long long, long long>> checkPointsForPolygonH(int n, int h, vector<pair<long long, long long>> points);
+vector<pair<long long, long long>> randomPointGenerator(int n, long long x, long long y);
+void threadFunctionEmptySet(mutex *mtx, int n, int h, long long x, long long y, vector<pair<long long, long long>> *emptySet, bool *found, long long *iterations);
 vector<pair<int, int>> grahamScan(vector<pair<int, int>> points);
 vector<pair<int, int>> checkPointsForPolygonH(int n, int h, vector<pair<int, int>> points);
 vector<pair<int, int>> randomPointGenerator(int n, int x, int y);
