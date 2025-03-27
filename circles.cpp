@@ -22,11 +22,11 @@ int main(int argc, const char *argv[])
     fstream outputFile;
     outputFile.open("circles2.txt", ios::app);
 
-    for (int r = 400; r < 1e8; r *= 5)
+    for (int r = 26; r < 1e8; r *= 5)
     {
 
         long long x = r / 2;
-        long y = 10;
+        long y = 8;
 
         cout << x << " " << y << "\n";
 
