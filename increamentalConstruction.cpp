@@ -46,7 +46,7 @@ bool examineNewPoint(pair<int, int> newPoint, vector<pair<int, int>> previousSet
 
 int main(int argc, const char *argv[])
 {
-    int n = 12;
+    int n = 13;
     int h = 6;
     int x = 100;
     int y = 100;
@@ -82,8 +82,9 @@ int main(int argc, const char *argv[])
 
     long long increments = 0;
     int valid = 0;
-    for (int added = 0; added < 4; ++added)
+    for (int added = 0; added < 3; ++added)
     {
+        if(added>valid) break;
         for (int i = 0; i < x; ++i)
         {
             for (int j = 0; j < y; ++j)
@@ -94,14 +95,14 @@ int main(int argc, const char *argv[])
                     valid++;
                     emptySet.push_back({i, j});
                 }
-                if (valid == 4)
+                if (valid == 3)
                     break;
             }
-            if (valid == 4)
+            if (valid == 3)
                 break;
         }
     }
-    if (valid == 4)
+    if (valid == 3)
     {
         string output2 = format("Number of iterations for extending: {}\n", increments);
         std::cout << output2;
