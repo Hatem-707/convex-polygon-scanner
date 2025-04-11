@@ -45,22 +45,14 @@ bool examineNewPoint(pair<int, int> newPoint, vector<pair<int, int>> previousSet
     return true;
 }
 
-void increamentalThread(pair<int, int> point, vector<pair<int, int>>* emptySet, int h, int * valid, mutex* mtx){
-    if (examineNewPoint(point, *emptySet, h, (*emptySet).size())){
-        lock_guard<mutex> lock(*mtx);
-        (*valid)++;
-        (*emptySet).push_back(point);
-    }
-}
-
 int main(int argc, const char *argv[])
 {
-    int n = 16;
-    int h = 7;
+    int n = 13;
+    int h = 6;
     int x = 100;
     int y = 100;
     srand(time(0));
-    string saveFile = "17points.txt";
+    string saveFile = "16points.txt";
 
     int toBoTested = 100;
     int success = 0;
@@ -77,7 +69,7 @@ int main(int argc, const char *argv[])
             threads.emplace_back(
                 static_cast<void (*)(mutex *, int, int, int, int, vector<pair<int, int>> *, bool *, long long *)>(
                     threadFunctionEmptySet),
-                &mtx, n, h, x, y, &emptySet, &found, &iterations);
+                &mtx, n, h, x/2, y/2, &emptySet, &found, &iterations);
         }
 
         for (auto &t : threads)
@@ -85,51 +77,41 @@ int main(int argc, const char *argv[])
             t.join();
         }
 
-        for (pair<int, int> point : emptySet)
+        for (pair<int, int>& point : emptySet)
         {
+            point.first = point.first + x/4;
+            point.second = point.second + y/4;
             std::cout << point.first << " " << point.second << "|";
         }
-        std::cout << endl;
+        cout << endl;
 
         string output = format("Number of iterations for generation: {}\n", iterations);
         std::cout << output;
 
         long long increments = 0;
         int valid = 0;
-        int toBeAdded = 16;
-        for (int added = 0; added < toBeAdded; ++added)
+        for (int added = 0; added < 3; ++added)
         {
-            mutex innerMtx;
-            vector<pair<int, int>> batch;
-            if (added > valid){
-                cout<<"Maximum set length: "<<emptySet.size()<<endl;
+            if (added > valid)
                 break;
-            }
             for (int i = 0; i < x; ++i)
             {
                 for (int j = 0; j < y; ++j)
                 {
-                    if(batch.size() == 14){
-                        vector<thread> innerThreads;
-                        for (int m=0; m<14; ++m){
-                            innerThreads.emplace_back(increamentalThread, batch[m], &emptySet, h, &valid, &innerMtx);
-                        }
-                        for (auto& t : innerThreads) {
-                            t.join();
-                        }
-                        increments+=14;
-                        batch.clear();
-                    }else
-                        batch.push_back({i, j});
-                    
-                    if (!(valid < toBeAdded))
+                    ++increments;
+                    if (examineNewPoint({i, j}, emptySet, h, emptySet.size()) == true)
+                    {
+                        valid++;
+                        emptySet.push_back({i, j});
+                    }
+                    if (valid == 3)
                         break;
                 }
-                if (!(valid < toBeAdded))
+                if (valid == 3)
                     break;
             }
         }
-        if (!(valid < toBeAdded))
+        if (valid == 3)
         {
             string output2 = format("Number of iterations for extending: {}\n", increments);
             std::cout << output2;
@@ -156,7 +138,7 @@ int main(int argc, const char *argv[])
                 std::cout << "Mistake!!!\n";
         }
         else
-            std::cout << "couldn't find set of size 32 \n";
+            std::cout << "couldn't find set of size 16 \n";
         std::cout << "run: " << toBoTested << "\n";
         std::cout << "successes: " << success << "\n";
     }

@@ -295,3 +295,28 @@ void threadFunctionEmptySet(mutex *mtx, int n, int h, long long x, long long y, 
         }
     }
 }
+
+void threadFunctionEmptySetLimited(mutex *mtx, int n, int h, long long x, long long y, vector<pair<long long, long long>> *emptySet, bool *found, long long *iterations, long long limit)
+{
+    while (!(*found) && (*iterations) < limit)
+    {
+        vector<pair<long long, long long>> newPoints = randomPointGenerator(n, x, y);
+
+        if (!(*found))
+        {
+            vector<pair<long long, long long>> polygonH = checkPointsForPolygonH(n, h, newPoints);
+
+            if (polygonH.size() == 1)
+            {
+                const lock_guard<mutex> lock(*mtx);
+                (*iterations)++;
+                *found = true;
+                *emptySet = polygonH;
+                return;
+            }
+
+            const lock_guard<mutex> lock(*mtx);
+            (*iterations)++;
+        }
+    }
+}

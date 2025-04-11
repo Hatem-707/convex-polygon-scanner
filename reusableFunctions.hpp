@@ -22,4 +22,5 @@ vector<pair<int, int>> grahamScan(vector<pair<int, int>> points);
 vector<pair<int, int>> checkPointsForPolygonH(int n, int h, vector<pair<int, int>> points);
 vector<pair<int, int>> randomPointGenerator(int n, int x, int y);
 void threadFunctionEmptySet(mutex *mtx, int n, int h, int x, int y, vector<pair<int, int>> *emptySet, bool *found, long long *iterations);
+void threadFunctionEmptySetLimited(mutex *mtx, int n, int h, long long x, long long y, vector<pair<long long, long long>> *emptySet, bool *found, long long *iterations, long long limit);
 

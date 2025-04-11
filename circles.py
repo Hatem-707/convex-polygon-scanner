@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 # Change this to your file path
-filename = 'circles2.txt'
+filename = 'heatmap_data.txt'
 
 # Load data from the file:
 # Each line is assumed to be: z x y
 data = np.loadtxt(filename)
 
 # Extract columns:
-z = data[:, 0]
-x = data[:, 1]
-y = data[:, 2]
+z = data[:, 2]
+x = data[:, 0]
+y = data[:, 1]
 
 # Create a grid over the domain of x and y:
 grid_x, grid_y = np.mgrid[x.min():x.max():100j, y.min():y.max():100j]

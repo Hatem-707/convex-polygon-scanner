@@ -18,51 +18,30 @@ int main(int argc, const char *argv[])
 {
     int n = 12;
     int h = 6;
-
+    const int MIN_COORD = 7;
+    const int MAX_COORD = 11; // Increased to 100
+    const int SAMPLES = 20;
+    const long long TIMEOUT = 500000; // Timeout per coordinate pair
+    
     fstream outputFile;
-    outputFile.open("circles2.txt", ios::app);
-
-    for (int r = 26; r < 1e8; r *= 5)
+    outputFile.open("heatmap_data.txt", ios::app); // Changed to write mode
+    
+    srand(time(0));
+    int samples_collected = 0;
+    
+    while (samples_collected < SAMPLES)
     {
-
-        long long x = r / 2;
-        long y = 8;
-
-        cout << x << " " << y << "\n";
-
-        vector<long long> history;
-        srand(time(0));
-        for (int m = 0; m < 15; m++)
-        {
-            long long iterations = 0;
-            vector<pair<long long, long long>> emptySet;
-            bool found = false;
-            mutex mtx;
-            vector<thread> threads;
-            if (x != 0 && y != 0)
-            {
-                for (int i = 0; i < 14; i++)
-                {
-                    threads.emplace_back(
-                        static_cast<void (*)(mutex *, int, int, long long, long long, vector<pair<long long, long long>> *, bool *, long long *)>(
-                            threadFunctionEmptySet),
-                        &mtx, n, h, x, y, &emptySet, &found, &iterations);
-                }
-
-                for (auto &t : threads)
-                {
-                    t.join();
-                }
-            }
-            history.push_back(iterations);
-        }
-
-        long long avg = reduce(history.begin(), history.end(), 0ll, plus<>()) / 15;
-
-        outputFile << avg << " " << x << " " << y << "\n";
-        cout << avg << " " << x << " " << y << "\n";
+        long long x = MIN_COORD + (rand() % (MAX_COORD - MIN_COORD + 1));
+        long long y = MIN_COORD + (rand() % (MAX_COORD - MIN_COORD + 1));
+        
+        
+        // Write results to file
+        outputFile << x << " " << y << " " << TIMEOUT << "\n";
+        
+        samples_collected++;
+        outputFile.flush(); // Ensure data is written even if program is interrupted
     }
+    
     outputFile.close();
-
     return 0;
 }
