@@ -24,36 +24,24 @@ void increamentalThread(pair<int, int> point, vector<pair<int, int>>* emptySet, 
 
 int main(int argc, const char *argv[])
 {
-    int n = 17;
+    int n = 16;
     int h = 7;
-    int x = 50;
-    int y = 50;
+    int x = 400;
+    int y = 400;
     srand(time(0));
     string saveFile = "17points.txt";
 
-    int toBoTested = 20;
+    int toBoTested = 1;
     int success = 0;
     while (toBoTested--)
     {
         long long iterations = 0;
-        vector<pair<int, int>> emptySet;
-        bool found = false;
-        mutex mtx;
-        vector<thread> threads;
-
-        for (int i = 0; i < 14; i++)
-        {
-            threads.emplace_back(
-                static_cast<void (*)(mutex *, int, int, int, int, vector<pair<int, int>> *, bool *, long long *)>(
-                    threadFunctionEmptySet),
-                &mtx, n, h, x, y, &emptySet, &found, &iterations);
-        }
-
-        for (auto &t : threads)
-        {
-            t.join();
-        }
-
+        vector<pair<int, int>> emptySet = {
+            {288, 200}, {208, 344}, {112, 48}, {288, 328}, {304, 344}, {240, 168}, {280, 200}, {72, 136},
+            {336, 112}, {256, 136}, {104, 0}, {392, 240}, {232, 176}, {304, 160}, {0, 104}, {120, 16},
+            {360, 216}, {0, 392}, {32, 384}, {40, 120}, {80, 144}, {136, 360}, {144, 72}
+        };
+        
         for (pair<int, int> point : emptySet)
         {
             std::cout << point.first << " " << point.second << "|";
@@ -65,7 +53,7 @@ int main(int argc, const char *argv[])
 
         long long increments = 0;
         int valid = 0;
-        int toBeAdded = 15;
+        int toBeAdded = 32-emptySet.size();
         for (int added = 0; added < toBeAdded; ++added)
         {
             mutex innerMtx;
@@ -112,6 +100,11 @@ int main(int argc, const char *argv[])
         std::cout << endl;
         if (!(valid < toBeAdded))
         {
+            for (pair<int, int> point : emptySet)
+            {
+                std::cout << point.first << " " << point.second << "|";
+            }
+            std::cout << endl;
             vector<pair<int, int>> confirmationHull = checkPointsForPolygonH(emptySet.size(), h, emptySet);
             if (confirmationHull.size() == 1)
             {

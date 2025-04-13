@@ -14,14 +14,14 @@
 using namespace std;
 
 
-int main(int argc, const char *argv[])
+int main(int argc, const char* argv[])
 {
-    int n = 13;
-    int h = 6;
+    int n = 17;
+    int h = 7;
     int x = 100;
     int y = 100;
     srand(time(0));
-    string saveFile = "16points.txt";
+    string saveFile = "17points.txt";
 
     int toBoTested = 100;
     int success = 0;
@@ -36,12 +36,12 @@ int main(int argc, const char *argv[])
         for (int i = 0; i < 14; i++)
         {
             threads.emplace_back(
-                static_cast<void (*)(mutex *, int, int, int, int, vector<pair<int, int>> *, bool *, long long *)>(
+                static_cast<void (*)(mutex*, int, int, int, int, vector<pair<int, int>> *, bool*, long long*)>(
                     threadFunctionEmptySet),
                 &mtx, n, h, x, y, &emptySet, &found, &iterations);
         }
 
-        for (auto &t : threads)
+        for (auto& t : threads)
         {
             t.join();
         }
@@ -57,7 +57,8 @@ int main(int argc, const char *argv[])
 
         long long increments = 0;
         int valid = 0;
-        for (int added = 0; added < 3; ++added)
+        int toBeAdded = 15;
+        for (int added = 0; added < toBeAdded; ++added)
         {
             if (added > valid)
                 break;
@@ -66,27 +67,28 @@ int main(int argc, const char *argv[])
                 for (int j = 0; j < y; ++j)
                 {
                     ++increments;
-                    if (examineNewPoint({i, j}, emptySet, h, emptySet.size()) == true)
+                    if (examineNewPoint({ i, j }, emptySet, h, emptySet.size()) == true)
                     {
                         valid++;
-                        emptySet.push_back({i, j});
+                        emptySet.push_back({ i, j });
                     }
-                    if (valid == 3)
+                    if (valid == toBeAdded)
                         break;
                 }
-                if (valid == 3)
+                if (valid == toBeAdded)
                     break;
             }
         }
-        if (valid == 3)
+        string output2 = format("Number of iterations for extending: {} to set size: {}\n", increments, emptySet.size());
+        std::cout << output2;
+        for (pair<int, int> point : emptySet)
         {
-            string output2 = format("Number of iterations for extending: {}\n", increments);
-            std::cout << output2;
-            for (pair<int, int> point : emptySet)
-            {
-                std::cout << point.first << " " << point.second << "|";
-            }
-            std::cout << endl;
+            std::cout << point.first << " " << point.second << "|";
+        }
+        std::cout << endl;
+        if (valid == toBeAdded)
+        {
+
             vector<pair<int, int>> confirmationHull = checkPointsForPolygonH(emptySet.size(), h, emptySet);
             if (confirmationHull.size() == 1)
             {
@@ -98,7 +100,7 @@ int main(int argc, const char *argv[])
                 {
                     file << point.first << " " << point.second << "|";
                 }
-                file<<endl;
+                file << endl;
                 file.close();
             }
             else

@@ -320,3 +320,35 @@ void threadFunctionEmptySetLimited(mutex *mtx, int n, int h, long long x, long l
         }
     }
 }
+
+bool examineNewPoint(pair<int, int> newPoint, vector<pair<int, int>> previousSet, int targetPoly, int setSize)
+{
+    vector<bool> combinations(setSize, false);
+    vector<pair<int, int>> polygon(targetPoly);
+
+    for (pair<int, int> point1 : previousSet)
+    {
+        for (pair<int, int> point2 : previousSet)
+        {
+            if ((crossProduct(newPoint, point1, point2) == 0 && point1 != point2) | newPoint == point1 | newPoint == point2)
+                return false;
+        }
+    }
+
+    fill(combinations.begin(), combinations.begin() + targetPoly - 1, true);
+    do
+    {
+        polygon.clear();
+        for (int index = 0; index < combinations.size(); index++)
+        {
+            if (combinations[index])
+                polygon.push_back(previousSet[index]);
+        }
+
+        polygon.push_back(newPoint);
+        vector<pair<int, int>> hull = grahamScan(polygon);
+        if (hull.size() == targetPoly)
+            return false;
+    } while (prev_permutation(combinations.begin(), combinations.end()));
+    return true;
+}
