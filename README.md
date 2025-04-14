@@ -18,6 +18,6 @@ week 7:
 In the previous optimization the algorithm a 16 point set would have taken **years to decades**. We traded the certainty for an algorithm that terminates in around 20 seconds, on the same hardware, and has a success rate of around 28%.
 
 week 8:  
-**Expanding to 32**: we tried to implement the algorithm to 32 points to mixed results. The run time is was still in-check, but the success rate dropped. On 100+ trials we didn't manage to generate a single 32 set. The largest set produced was 28.  
+**Expanding to 32**: we tried to implement the algorithm to 32 points to mixed results. The run time is was still in-check, but the success rate dropped. On 100+ trials we didn't manage to generate a single 32 set. The largest set produced was 27.  
 **Symmetry Exploration**: we have been thinking of translation symmetry, particularly bounding seed to a fraction of the construction area. This, however, proved futile and even harmful to set generation.
 
