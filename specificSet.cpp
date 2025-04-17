@@ -26,8 +26,8 @@ int main(int argc, const char *argv[])
 {
     int n = 16;
     int h = 7;
-    int x = 400;
-    int y = 400;
+    int x = 200;
+    int y = 200;
     srand(time(0));
     string saveFile = "17points.txt";
 
@@ -37,9 +37,10 @@ int main(int argc, const char *argv[])
     {
         long long iterations = 0;
         vector<pair<int, int>> emptySet = {
-            {288, 200}, {208, 344}, {112, 48}, {288, 328}, {304, 344}, {240, 168}, {280, 200}, {72, 136},
-            {336, 112}, {256, 136}, {104, 0}, {392, 240}, {232, 176}, {304, 160}, {0, 104}, {120, 16},
-            {360, 216}, {0, 392}, {32, 384}, {40, 120}, {80, 144}, {136, 360}, {144, 72}
+            {148, 113}, {62, 181}, {124, 102}, {180, 112},
+            {50, 193}, {92, 163}, {47, 17}, {132, 150},
+            {88, 93}, {106, 111}, {113, 151}, {163, 199},
+            {45, 35}, {104, 67}, {130, 101}, {72, 66}
         };
         
         for (pair<int, int> point : emptySet)
@@ -66,16 +67,16 @@ int main(int argc, const char *argv[])
             {
                 for (int j = 0; j < y; ++j)
                 {
-                    if(batch.size() == 14){
+                    if(batch.size() == 1){
                         int old = valid; 
                         vector<thread> innerThreads;
-                        for (int m=0; m<14; ++m){
+                        for (int m=0; m<1; ++m){
                             innerThreads.emplace_back(increamentalThread, batch[m], &emptySet, h, &valid, &innerMtx);
                         }
                         for (auto& t : innerThreads) {
                             t.join();
                         }
-                        increments+=14;
+                        increments+=1;
                         batch.clear();
                         while (old+1<valid){
                             emptySet.pop_back();

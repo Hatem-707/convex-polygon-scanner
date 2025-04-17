@@ -75,10 +75,10 @@ int main(int argc, const char* argv[])
 {
     int n = 16;
     int h = 7;
-    int x = 100;
-    int y = 100;
+    int x = 200;
+    int y = 200;
     srand(time(0));
-    string saveFile = "16points.txt";
+    string saveFile = "1points.txt";
 
     int toBoTested = 100;
     int success = 0;
