@@ -16,14 +16,14 @@ using namespace std;
 
 int main(int argc, const char *argv[])
 {
-    int n = 13;
+    int n = 11;
     int h = 6;
     int x = 100;
     int y = 100;
     srand(time(0));
-    string saveFile = "16points.txt";
+    string saveFile = "temppoints.txt";
 
-    int toBoTested = 100;
+    int toBoTested = 500;
     int success = 0;
     while (toBoTested--)
     {
@@ -57,7 +57,8 @@ int main(int argc, const char *argv[])
 
         long long increments = 0;
         int valid = 0;
-        for (int added = 0; added < 3; ++added)
+        int toBeAdded = 6;
+        for (int added = 0; added < toBeAdded; ++added)
         {
             if (added > valid)
                 break;
@@ -71,14 +72,14 @@ int main(int argc, const char *argv[])
                         valid++;
                         emptySet.push_back({i, j});
                     }
-                    if (valid == 3)
+                    if (valid == toBeAdded)
                         break;
                 }
-                if (valid == 3)
+                if (valid == toBeAdded)
                     break;
             }
         }
-        if (valid == 3)
+        if (valid == toBeAdded)
         {
             string output2 = format("Number of iterations for extending: {}\n", increments);
             std::cout << output2;

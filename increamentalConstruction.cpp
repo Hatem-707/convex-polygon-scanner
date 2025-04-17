@@ -82,7 +82,8 @@ int main(int argc, const char *argv[])
 
     long long increments = 0;
     int valid = 0;
-    for (int added = 0; added < 3; ++added)
+    int toBeAdded = 2;
+    for (int added = 0; added < toBeAdded; ++added)
     {
         if(added>valid) break;
         for (int i = 0; i < x; ++i)
@@ -95,14 +96,14 @@ int main(int argc, const char *argv[])
                     valid++;
                     emptySet.push_back({i, j});
                 }
-                if (valid == 3)
+                if (valid == toBeAdded)
                     break;
             }
-            if (valid == 3)
+            if (valid == toBeAdded)
                 break;
         }
     }
-    if (valid == 3)
+    if (valid == toBeAdded)
     {
         string output2 = format("Number of iterations for extending: {}\n", increments);
         std::cout << output2;
@@ -116,6 +117,6 @@ int main(int argc, const char *argv[])
             cout << "Confirmed!!!\n";
         else
             cout << "Mistake!!!\n";
-    }else cout << "couldn't find set of size 16 \n";
+    }else cout << "couldn't find set of size given \n";
     return 0;
 }
