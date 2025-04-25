@@ -73,12 +73,12 @@ bool examineNewPointMulti(pair<int, int> newPoint, vector<pair<int, int>> previo
 
 int main(int argc, const char* argv[])
 {
-    int n = 16;
-    int h = 7;
-    int x = 200;
-    int y = 200;
+    int n = 13;
+    int h = 6;
+    int x = 100;
+    int y = 100;
     srand(time(0));
-    string saveFile = "1points.txt";
+    string saveFile = "16points.txt";
 
     int toBoTested = 100;
     int success = 0;
@@ -114,7 +114,7 @@ int main(int argc, const char* argv[])
 
         long long increments = 0;
         int valid = 0;
-        int toBeAdded = 16;
+        int toBeAdded = 3;
         for (int added = 0; added < toBeAdded; ++added)
         {
             if (added > valid)

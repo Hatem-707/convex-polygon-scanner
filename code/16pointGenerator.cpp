@@ -16,12 +16,12 @@ using namespace std;
 
 int main(int argc, const char *argv[])
 {
-    int n = 11;
+    int n = 13;
     int h = 6;
     int x = 100;
     int y = 100;
     srand(time(0));
-    string saveFile = "temppoints.txt";
+    string saveFile = "16points.txt";
 
     int toBoTested = 500;
     int success = 0;
@@ -57,7 +57,7 @@ int main(int argc, const char *argv[])
 
         long long increments = 0;
         int valid = 0;
-        int toBeAdded = 6;
+        int toBeAdded = 3;
         for (int added = 0; added < toBeAdded; ++added)
         {
             if (added > valid)
