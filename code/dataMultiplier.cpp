@@ -41,8 +41,8 @@ int main(){
     ofstream extendedSets;
     string line;
     int edge = 100;
-    formatedSets.open("16points.txt");
-    extendedSets.open("extensionData.txt", ios::app);
+    formatedSets.open("new16points.txt");
+    extendedSets.open("newExtensionData.txt", ios::app);
     vector<vector<pair<int, int>>> result;
     while (getline(formatedSets, line))
     {

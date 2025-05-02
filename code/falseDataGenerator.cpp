@@ -10,11 +10,12 @@
 using namespace std;
 
 int main() {
-    int toBeGenrated = 1400;
+    int toBeGenrated = 350;
     ofstream outputFile;
-    outputFile.open("falseData.txt", ios::out);
+    outputFile.open("newFalseData.txt", ios::out);
     while (toBeGenrated)
     {
+        srand(time(0));
         vector<pair<int, int>> set = randomPointGenerator(16, 100, 100);
         vector<pair<int, int>> hull = checkPointsForPolygonH(16, 6, set);
         if (hull.size() == 6) {

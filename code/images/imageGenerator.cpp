@@ -39,12 +39,12 @@ vector<pair<int, int>> parse(string line) {
 
 int main() {
 
-    vector<string> files = { "/home/hatem/cpp_vscode/algorithgmProject/code/extensionData.txt", 
-        "/home/hatem/cpp_vscode/algorithgmProject/code/falseData.txt" };
-    vector<string> output = { "true", "false" };
+    vector<string> files = { "/home/hatem/cpp_vscode/algorithgmProject/code/newExtensionData.txt", 
+        "/home/hatem/cpp_vscode/algorithgmProject/code/newFalseData.txt" };
+    vector<string> output = { "newTrue", "newFalse" };
     
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 1; i < 2; ++i) {
         ifstream inputFile;
         inputFile.open(files[i]);
         string line;

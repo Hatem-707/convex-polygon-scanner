@@ -21,7 +21,7 @@ int main(int argc, const char *argv[])
     int x = 100;
     int y = 100;
     srand(time(0));
-    string saveFile = "16points.txt";
+    string saveFile = "new16points.txt";
 
     int toBoTested = 500;
     int success = 0;
